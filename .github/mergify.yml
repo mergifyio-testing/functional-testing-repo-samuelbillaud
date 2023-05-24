@@ -2,8 +2,7 @@ queue_rules:
   - name: hotfix
     allow_inplace_checks: true
     conditions:
-      -and:
-        - label=hotfix
+      - label=hotfix
       - and: &CheckRuns
           - or:
               - -label=docker
