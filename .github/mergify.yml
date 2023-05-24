@@ -35,7 +35,7 @@ pull_request_rules:
   - name: automatic merge on batch label
     conditions:
       - "#approved-reviews-by>=1"
-      - label=batch merge
+      - label=batch
     actions:
       queue:
         name: batch
