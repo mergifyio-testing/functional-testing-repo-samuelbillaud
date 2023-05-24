@@ -2,6 +2,8 @@ queue_rules:
   - name: hotfix
     allow_inplace_checks: true
     conditions:
+      -and:
+        - label=hotfix
       - and: &CheckRuns
           - or:
               - -label=docker
@@ -27,11 +29,12 @@ queue_rules:
 pull_request_rules:
   - name: Automatic merge ⬇️ on approval ✔
     conditions:
-      - "#approved-reviews-by>=0"
+      - "#approved-reviews-by>=2"
     actions:
       queue:
   - name: automatic merge on batch label
     conditions:
+      - "#approved-reviews-by>=1"
       - label=batch merge
     actions:
       queue:
