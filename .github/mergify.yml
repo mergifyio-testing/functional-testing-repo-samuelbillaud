@@ -6,16 +6,6 @@ queue_rules:
           - or:
               - -label=docker
               - check-success=docker-onpremise
-          - check-success=semgrep
-          - check-success=front (eslint)
-          - check-success=front (test)
-          - check-success=front (test:cf-page-worker)
-          - check-success=front-component
-          - check-success=front-e2e (1)
-          - check-success=front-e2e (2)
-          - check-success=front-e2e (3)
-          - check-success=front-e2e (4)
-          - check-success=front-e2e (5)
     speculative_checks: 5
   - name: default
     allow_inplace_checks: true
@@ -23,6 +13,16 @@ queue_rules:
       - and: *CheckRuns
       - schedule=Mon-Fri 09:00-17:30[Europe/Paris]
     speculative_checks: 5
+  - name: batch
+    allow_inplace_checks: true
+    conditions:
+      - and: *CheckRuns
+      - schedule=Mon-Fri 09:00-17:00[Europe/Paris]
+    batch_size: 7
+    batch_max_wait_time: 5min
+    queue_branch_merge_method: fast-forward
+    disallow_checks_interruption_from_queues:
+      - default
 
 pull_request_rules:
   - name: Automatic merge ⬇️ on approval ✔
@@ -30,3 +30,11 @@ pull_request_rules:
       - "#approved-reviews-by>=0"
     actions:
       queue:
+  - name: automatic merge on batch label
+    conditions:
+      - label=batch merge
+    actions:
+      queue:
+        name: batch
+        method: merge
+        commit_message_template: null
