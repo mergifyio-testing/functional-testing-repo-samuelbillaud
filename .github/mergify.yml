@@ -31,6 +31,12 @@ pull_request_rules:
       - "#approved-reviews-by>=2"
     actions:
       queue:
+  - name: Automatic merge on hotfix
+    conditions:
+      - "#approved-reviews-by>=0"
+      - label=hotfix
+    actions:
+      queue:
   - name: automatic merge on batch label
     conditions:
       - "#approved-reviews-by>=0"
