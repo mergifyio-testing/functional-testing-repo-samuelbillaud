@@ -38,6 +38,9 @@ pull_request_rules:
       - label=hotfix
     actions:
       queue:
+        name: hotfix
+        method: merge
+        commit_message_template: null
   - name: automatic merge on batch label
     conditions:
       - "#approved-reviews-by>=0"
