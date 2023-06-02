@@ -7,6 +7,7 @@ queue_rules:
           - or:
               - -label=docker
               - check-success=docker-onpremise
+          - check-success=front-e2e (2)
     speculative_checks: 5
   - name: default
     allow_inplace_checks: true
