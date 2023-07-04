@@ -1,0 +1,11 @@
+pull_request_rules:
+- actions:
+    queue: {}
+  conditions:
+  - base=20230704192348/test_queue_with_incompatible_branch_protection/main
+  - label=queue
+  name: Merge priority high
+queue_rules:
+- batch_size: 2
+  conditions: []
+  name: default
