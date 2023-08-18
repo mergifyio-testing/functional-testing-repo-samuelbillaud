@@ -3,44 +3,43 @@ queue_rules:
     allow_inplace_checks: true
     conditions:
       - label=hotfix
-      - and: &CheckRuns
+      - and: &ref_0
           - or:
-              - -label=docker
+              - '-label=docker'
               - check-success=docker-onpremise
     speculative_checks: 5
   - name: default
     allow_inplace_checks: true
     conditions:
-      - and: *CheckRuns
+      - and: *ref_0
       - schedule=Mon-Fri 09:00-17:30[Europe/Paris]
     speculative_checks: 5
   - name: batch
     allow_inplace_checks: true
     conditions:
-      - and: *CheckRuns
+      - and: *ref_0
       - schedule=Mon-Fri 09:00-19:00[Europe/Paris]
     batch_size: 3
     batch_max_wait_time: 45min
     queue_branch_merge_method: fast-forward
     disallow_checks_interruption_from_queues:
       - default
-
 pull_request_rules:
   - name: Automatic merge ⬇️ on approval ✔
     conditions:
-      - "#approved-reviews-by>=0"
+      - '#approved-reviews-by>=0'
     actions:
-      queue:
+      queue: 
   - name: Automatic merge on hotfix
     conditions:
-      - "#approved-reviews-by>=0"
+      - '#approved-reviews-by>=0'
       - label=hotfix
     actions:
       queue:
         name: hotfix
   - name: automatic merge on batch label
     conditions:
-      - "#approved-reviews-by>=0"
+      - '#approved-reviews-by>=0'
       - label=batch
     actions:
       queue:
